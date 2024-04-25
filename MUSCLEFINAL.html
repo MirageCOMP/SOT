@@ -76,8 +76,43 @@
 canvas{
   padding-top: 0px;
   padding-left: 300px;
+
   
 }
+
+  .bar{
+    left: 13%;
+    position: absolute;
+    background-color: aliceblue;
+    margin: 50px auto;
+    width: 50px;
+    height: 300px;
+  }
+  .litbar{
+    background-color: black;
+    height: 0%;
+    width: 50px;
+  }
+  .per{
+    color: aliceblue;
+    font-size: 16;
+    position: absolute;
+    left: 13%;
+    top: 70%;
+
+  }
+  .viewer-widget-js{
+    width: 0px;
+    height: 0px;
+    font-size: 0;
+  }
+  .controls{
+    width: 0px;
+    height: 0px;
+  }
+  
+
+
 
 
 </style>
@@ -111,6 +146,7 @@ canvas{
         <li><a style="text-decoration: none; font-size: 25px;" href="MUSCLE ABOUTUS.html">About us</a></li>
 
     </ul>
+    
 </header>
 
 
@@ -130,16 +166,33 @@ canvas{
 
   <!-- Down here is the really useful code-->
   <!--ตัวแปรเก็บค่าต่างๆ-->
+  <main>
   <div class="container">
+
+    <!--progress bar-->
+    <div class="bar">
+      <div id="yae" class="litbar"></div>
+      
+    </div>
+    <div id="percent" class="per"></div>
+
+    <!--camera-->
     <video class="input_video" width="0px" height="0px"></video>
-    <canvas class="output_canvas" width="1100px" height="600px"></canvas>
+    <canvas class="output_canvas" width="1100px" height="600px" ></canvas>
+
+    <!--button-->
     <div class="landmark-grid-container" ></div>
     <div id="textOverlay" style="position: absolute; top: 200px; left: 40px; color: black; font-size: 30px;  font-family: 'Anta', sans-serif;">
       <p id="overlayText"></p>
       <button id="myButton" style="border-radius: 20px; font-size: 30px;  font-family: 'Anta', sans-serif;">Reset!</button>
     </div>
-    
+    <button id="butto" class="came" style="border-radius: 20px; font-size: 30px;  font-family: 'Anta', sans-serif; background-color: aliceblue;">opencamera</button>
+    <br>
+    <button id="closeaa" class="came" style="border-radius: 20px; font-size: 30px;  font-family: 'Anta', sans-serif; background-color: aliceblue;">closecamera</button>
+  
   </div>
+  
+  </main>
 
 
   <script type="module">
@@ -210,6 +263,10 @@ canvas{
 
       console.log(State)
       console.log(Counter);
+      const x = (AngleOnRightElbow/180)*100
+      console.log(x);
+      document.getElementById('yae').style.height = x + '%' ;
+      document.getElementById('percent').innerHTML = x.toFixed(0) +'%';
 
 
 
@@ -288,18 +345,40 @@ canvas{
     
     //Order to creat canva show
     const camera = new Camera(videoElement,{
-      onFrame: async () => {
-        await pose.send({image: videoElement});},
-      //Fix canva size
-      width: 1280,
-      height: 720
-    });
-
-    //Order camera to turn on
-    camera.start();
+        onFrame: async () => {
+          await pose.send({image: videoElement});},
+        //Fix canva size
+        width: 1280,
+        height: 720
+      });
 
 
+
+      //Order camera to turn 
+      
+    const oper = document.getElementById('butto')
+      oper.addEventListener('click',()=>{
+        camera.start();
+    
+      }
+    )
+    const closecamera = document.getElementById('closeaa')
+      closecamera.addEventListener('click',()=>{
+        
+        camera.stop();
+    
+      }
+    )
+
+
+    
+
+    
+  
+  
   </script>
+
+
 <!--Important cod finish-->
 
 
